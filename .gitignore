@@ -1,0 +1,88 @@
+# =========================
+# Python
+# =========================
+
+**pycache**/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+
+venv/
+env/
+ENV/
+
+# =========================
+# Django
+# =========================
+
+*.log
+*.pot
+*.pyc
+db.sqlite3
+db.sqlite3-journal
+
+# Media & Static (optional handling)
+
+media/
+staticfiles/
+
+# =========================
+# Environment Variables
+# =========================
+
+.env
+.env.*
+
+# =========================
+# IDE / Editor
+# =========================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*.DS_Store
+
+# =========================
+# OS Files
+# =========================
+
+Thumbs.db
+
+# =========================
+# Build / Distribution
+# =========================
+
+build/
+dist/
+*.egg-info/
+
+# =========================
+# Node (if you add Tailwind build tools later)
+#=========================
+
+node_modules/
+package-lock.json
+yarn.lock
+
+# =========================
+# Logs
+# =========================
+
+*.log
+
+# =========================
+# Coverage / Testing
+# =========================
+
+.coverage
+htmlcov/
+.pytest_cache/
+
+# =========================
+# Misc
+# =========================
+
+*.bak
+*.tmp
