@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#020617" />
+    <title>{% block title %}Portfolio{% endblock %}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Enable Tailwind `dark:` classes via `html.dark`.
+      tailwind.config = { darkMode: "class" };
+    </script>
+
+    <style>
+      /* Small set of production-friendly defaults without extra libraries. */
+      .text-gradient {
+        background: linear-gradient(90deg, #60a5fa, #a78bfa);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      [data-animate="fade-up"] {
+        opacity: 0;
+        transform: translateY(12px);
+        transition: opacity 700ms ease, transform 700ms ease;
+      }
+      [data-animate="fade-up"].is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+
+  <body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+    <!-- Page loader -->
+    <div
+      id="page-loader"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-slate-950"
+      aria-hidden="true"
+    >
+      <div class="text-center">
+        <div class="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-slate-300 border-t-slate-900 dark:border-slate-700 dark:border-t-slate-100"></div>
+        <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">Loading...</p>
+      </div>
+    </div>
+
+    <header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/70 backdrop-blur dark:border-slate-800/70 dark:bg-slate-950/70">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+        <a class="font-semibold tracking-tight" href="/">
+          <span class="text-gradient">Divyanshu</span>
+        </a>
+
+        <div class="flex items-center gap-4 overflow-x-auto whitespace-nowrap md:gap-6">
+          <a class="text-sm text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white" href="#about"
+            >About</a
+          >
+          <a class="text-sm text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white" href="#projects"
+            >Projects</a
+          >
+          <a class="text-sm text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white" href="#experience"
+            >Experience</a
+          >
+          <a class="text-sm text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white" href="#contact"
+            >Contact</a
+          >
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button
+            id="theme-toggle"
+            type="button"
+            class="rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-900"
+            aria-label="Toggle theme"
+          >
+            <span id="theme-toggle-label" class="font-medium">Dark</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-4">
+      {% if messages %}
+        <div class="mt-6">
+          {% for message in messages %}
+            <div
+              class="mb-3 rounded-xl border px-4 py-3 text-sm
+              {% if message.tags == 'success' %}border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300{% else %}border-rose-500/30 bg-rose-500/10 text-rose-700 dark:text-rose-300{% endif %}"
+              role="status"
+            >
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="mt-16 border-t border-slate-200/70 py-10 dark:border-slate-800/70">
+      <div class="mx-auto max-w-6xl px-4">
+        <p class="text-center text-sm text-slate-500 dark:text-slate-400">
+          (c) {% now "Y" %} Divyanshu Prince. Built with Django + Tailwind.
+        </p>
+      </div>
+    </footer>
+
+    <script src="{% static 'core/js/app.js' %}" defer></script>
+    <script>
+      // Make theme default dark without a flash.
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          if (saved === "light") document.documentElement.classList.remove("dark");
+          if (saved === "dark" || saved === null) document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
+  </body>
+</html>
+
