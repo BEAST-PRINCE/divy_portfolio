@@ -13,7 +13,19 @@
     } catch (e) {}
 
     const label = $("#theme-toggle-label");
+    const sun = $("#theme-icon-sun");
+    const moon = $("#theme-icon-moon");
+
     if (label) label.textContent = theme === "light" ? "Light" : "Dark";
+    if (sun && moon) {
+      if (theme === "light") {
+        sun.classList.remove("hidden");
+        moon.classList.add("hidden");
+      } else {
+        moon.classList.remove("hidden");
+        sun.classList.add("hidden");
+      }
+    }
   }
 
   function initThemeToggle() {
@@ -88,19 +100,27 @@
       if (direction === 1) {
         sub += 1;
         el.textContent = current.slice(0, sub);
-        if (sub >= current.length) direction = -1;
+        if (sub >= current.length) {
+          direction = -1;
+          return 1000; // pause 1s before moving to the next word
+        }
       } else {
         sub -= 1;
         el.textContent = current.slice(0, Math.max(0, sub));
         if (sub <= 0) {
           direction = 1;
           idx = (idx + 1) % words.length;
+          return 100; // brief pause before next cycle starts
         }
       }
+      return direction === 1 ? 130 : 95; // slower typing/deleting cadence
     };
 
-    // Total cadence tuned for a smooth, not-annoying loop.
-    window.setInterval(tick, 45);
+    const loop = () => {
+      const delay = tick();
+      window.setTimeout(loop, delay);
+    };
+    loop();
   }
 
   async function logVisit() {
@@ -148,10 +168,10 @@
       grid.insertAdjacentHTML(
         "beforeend",
         `
-        <article class="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-800 dark:bg-slate-900/30" data-animate="fade-up">
+        <article class="card-3d glass-panel group rounded-2xl border border-slate-200 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-800" data-animate="fade-up">
           <div class="flex items-start justify-between gap-4">
             <div>
-              <h3 class="text-base font-semibold tracking-tight text-slate-900 dark:text-white">
+              <h3 class="text-lg md:text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                 ${escapeHtml(p.title || "Project")}
               </h3>
               <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">

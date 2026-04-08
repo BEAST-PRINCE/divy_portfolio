@@ -8,6 +8,14 @@ from typing import Any, Dict, List, Optional
 
 _CACHE: Dict[str, Any] = {"ts": 0.0, "data": None}
 _CACHE_TTL_SECONDS = 6 * 60 * 60  # 6 hours
+_PINNED_REPOS = [
+    "Cryptocurrency_price_prediction",
+    "Python_Music_Player",
+    "Fire_Chat",
+    "Project_Portfolio",
+    "Python_Text_Editor",
+    "Ballot_system",
+]
 
 
 def _fetch_github_json(url: str) -> Any:
@@ -50,14 +58,38 @@ def get_featured_projects(username: str, count: int = 6) -> List[Dict[str, Any]]
     if not isinstance(repos, list):
         return []
 
-    filtered: List[Dict[str, Any]] = []
+    repo_map: Dict[str, Any] = {}
+    for repo in repos:
+        if not isinstance(repo, dict):
+            continue
+        repo_name = repo.get("name")
+        if repo_name:
+            repo_map[repo_name] = repo
+
+    prioritized_repos: List[Dict[str, Any]] = []
+
+    # First, add pinned projects in profile order.
+    for pinned_name in _PINNED_REPOS:
+        repo = repo_map.get(pinned_name)
+        if not repo:
+            continue
+        if repo.get("fork") or repo.get("archived"):
+            continue
+        prioritized_repos.append(repo)
+
+    # Then fill remaining with other repos by stars.
     for repo in repos:
         # Skip forks to keep the portfolio clean.
         if repo.get("fork"):
             continue
         if repo.get("archived"):
             continue
+        if repo.get("name") in _PINNED_REPOS:
+            continue
+        prioritized_repos.append(repo)
 
+    filtered: List[Dict[str, Any]] = []
+    for repo in prioritized_repos:
         filtered.append(
             {
                 "title": repo.get("name") or "",
