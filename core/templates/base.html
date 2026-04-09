@@ -1,192 +1,194 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth dark">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#020617" />
-    <title>{% block title %}Portfolio{% endblock %}</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      // Enable Tailwind `dark:` classes via `html.dark`.
-      tailwind.config = { darkMode: "class" };
-    </script>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#020617" />
+  <title>{% block title %}Portfolio{% endblock %}</title>
 
-    <style>
-      /* Small set of production-friendly defaults without extra libraries. */
-      .text-gradient {
-        background: linear-gradient(90deg, #60a5fa, #a78bfa, #c084fc);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-      }
-      .bg-mesh {
-        background:
-          radial-gradient(circle at 12% 18%, rgba(147, 51, 234, 0.22), transparent 28%),
-          radial-gradient(circle at 86% 12%, rgba(59, 130, 246, 0.2), transparent 26%),
-          radial-gradient(circle at 84% 72%, rgba(192, 132, 252, 0.18), transparent 34%),
-          radial-gradient(circle at 18% 82%, rgba(99, 102, 241, 0.16), transparent 30%),
-          linear-gradient(165deg, #f8faff 0%, #f4f1ff 42%, #edf2ff 100%);
-      }
-      .dark .bg-mesh {
-        background:
-          radial-gradient(circle at 12% 18%, rgba(168, 85, 247, 0.28), transparent 28%),
-          radial-gradient(circle at 84% 14%, rgba(59, 130, 246, 0.2), transparent 26%),
-          radial-gradient(circle at 84% 72%, rgba(192, 132, 252, 0.2), transparent 34%),
-          radial-gradient(circle at 18% 82%, rgba(99, 102, 241, 0.2), transparent 30%),
-          linear-gradient(165deg, #020617 0%, #0b1023 45%, #130c2e 100%);
-      }
-      .card-3d {
-        transform-style: preserve-3d;
-        box-shadow:
-          0 10px 30px rgba(15, 23, 42, 0.16),
-          0 2px 8px rgba(99, 102, 241, 0.15);
-        transition: transform 300ms ease, box-shadow 300ms ease;
-      }
-      .card-3d:hover {
-        transform: translateY(-4px) rotateX(2deg) rotateY(-2deg);
-        box-shadow:
-          0 18px 38px rgba(15, 23, 42, 0.2),
-          0 8px 18px rgba(99, 102, 241, 0.2);
-      }
-      .glass-panel {
-        background: linear-gradient(
-          145deg,
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Enable Tailwind `dark:` classes via `html.dark`.
+    tailwind.config = { darkMode: "class" };
+  </script>
+
+  <style>
+    /* Small set of production-friendly defaults without extra libraries. */
+    .text-gradient {
+      background: linear-gradient(90deg, #60a5fa, #a78bfa, #c084fc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .bg-mesh {
+      background:
+        radial-gradient(circle at 12% 18%, rgba(147, 51, 234, 0.22), transparent 28%),
+        radial-gradient(circle at 86% 12%, rgba(59, 130, 246, 0.2), transparent 26%),
+        radial-gradient(circle at 84% 72%, rgba(192, 132, 252, 0.18), transparent 34%),
+        radial-gradient(circle at 18% 82%, rgba(99, 102, 241, 0.16), transparent 30%),
+        linear-gradient(165deg, #f8faff 0%, #f4f1ff 42%, #edf2ff 100%);
+    }
+
+    .dark .bg-mesh {
+      background:
+        radial-gradient(circle at 12% 18%, rgba(168, 85, 247, 0.28), transparent 28%),
+        radial-gradient(circle at 84% 14%, rgba(59, 130, 246, 0.2), transparent 26%),
+        radial-gradient(circle at 84% 72%, rgba(192, 132, 252, 0.2), transparent 34%),
+        radial-gradient(circle at 18% 82%, rgba(99, 102, 241, 0.2), transparent 30%),
+        linear-gradient(165deg, #020617 0%, #0b1023 45%, #130c2e 100%);
+    }
+
+    .card-3d {
+      transform-style: preserve-3d;
+      box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.16),
+        0 2px 8px rgba(99, 102, 241, 0.15);
+      transition: transform 300ms ease, box-shadow 300ms ease;
+    }
+
+    .card-3d:hover {
+      transform: translateY(-4px) rotateX(2deg) rotateY(-2deg);
+      box-shadow:
+        0 18px 38px rgba(15, 23, 42, 0.2),
+        0 8px 18px rgba(99, 102, 241, 0.2);
+    }
+
+    .glass-panel {
+      background: linear-gradient(145deg,
           rgba(255, 255, 255, 0.88),
-          rgba(248, 250, 252, 0.78)
-        );
-        backdrop-filter: blur(10px);
-      }
-      .dark .glass-panel {
-        background: linear-gradient(
-          145deg,
+          rgba(248, 250, 252, 0.78));
+      backdrop-filter: blur(10px);
+    }
+
+    .dark .glass-panel {
+      background: linear-gradient(145deg,
           rgba(15, 23, 42, 0.78),
-          rgba(2, 6, 23, 0.7)
-        );
-      }
-      .ambient-blob {
-        position: fixed;
-        filter: blur(38px);
-        opacity: 0.24;
-        pointer-events: none;
-        z-index: 0;
-      }
-      .dark .ambient-blob {
-        opacity: 0.3;
-      }
-      [data-animate="fade-up"] {
-        opacity: 0;
-        transform: translateY(12px);
-        transition: opacity 700ms ease, transform 700ms ease;
-      }
-      [data-animate="fade-up"].is-visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    </style>
-  </head>
+          rgba(2, 6, 23, 0.7));
+    }
 
-  <body class="bg-mesh font-bold text-slate-900 antialiased dark:text-slate-100">
-    <div class="ambient-blob -left-24 top-20 h-72 w-72 rounded-full bg-purple-500"></div>
-    <div class="ambient-blob right-0 top-80 h-64 w-64 rounded-full bg-indigo-500"></div>
-    <div class="ambient-blob bottom-10 left-1/3 h-56 w-56 rounded-full bg-fuchsia-400"></div>
+    .ambient-blob {
+      position: fixed;
+      filter: blur(38px);
+      opacity: 0.24;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-    <!-- Page loader -->
-    <div
-      id="page-loader"
-      class="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-slate-950"
-      aria-hidden="true"
-    >
-      <div class="text-center">
-        <div class="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-slate-300 border-t-slate-900 dark:border-slate-700 dark:border-t-slate-100"></div>
-        <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">Loading...</p>
+    .dark .ambient-blob {
+      opacity: 0.3;
+    }
+
+    [data-animate="fade-up"] {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    [data-animate="fade-up"].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body class="bg-mesh font-bold text-slate-900 antialiased dark:text-slate-100">
+  <div class="ambient-blob -left-24 top-20 h-72 w-72 rounded-full bg-purple-500"></div>
+  <div class="ambient-blob right-0 top-80 h-64 w-64 rounded-full bg-indigo-500"></div>
+  <div class="ambient-blob bottom-10 left-1/3 h-56 w-56 rounded-full bg-fuchsia-400"></div>
+
+  <!-- Page loader -->
+  <div id="page-loader" class="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-slate-950"
+    aria-hidden="true">
+    <div class="text-center">
+      <div
+        class="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-slate-300 border-t-slate-900 dark:border-slate-700 dark:border-t-slate-100">
       </div>
+      <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">Loading...</p>
     </div>
+  </div>
 
-    <header class="sticky top-0 z-40 border-b border-slate-200/60 bg-white/50 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-950/45">
-      <nav class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-4">
-        <a class="mr-3 text-2xl font-semibold tracking-tight md:text-3xl" href="/">
-          <span class="text-gradient">Divyanshu Prince</span>
-        </a>
+  <header
+    class="sticky top-0 z-40 border-b border-slate-200/60 bg-white/50 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-950/45">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-4">
+      <a class="mr-3 text-2xl font-semibold tracking-tight md:text-3xl" href="/">
+        <span class="text-gradient">Divyanshu Prince</span>
+      </a>
 
-        <div class="flex items-center gap-5 overflow-x-auto whitespace-nowrap md:gap-8">
-          <a class="text-sm text-slate-700 hover:text-violet-700 dark:text-slate-300 dark:hover:text-violet-300" href="#about"
-            >About</a
-          >
-          <a class="text-sm text-slate-700 hover:text-violet-700 dark:text-slate-300 dark:hover:text-violet-300" href="#projects"
-            >Projects</a
-          >
-          <a class="text-sm text-slate-700 hover:text-violet-700 dark:text-slate-300 dark:hover:text-violet-300" href="#experience"
-            >Experience</a
-          >
-          <a class="text-sm text-slate-700 hover:text-violet-700 dark:text-slate-300 dark:hover:text-violet-300" href="#contact"
-            >Contact</a
-          >
-        </div>
-
-        <div class="flex items-center gap-3">
-          <button
-            id="theme-toggle"
-            type="button"
-            class="inline-flex items-center gap-2 rounded-xl border border-purple-200/70 bg-white/70 px-3 py-2 text-sm text-slate-700 hover:bg-purple-50 dark:border-purple-400/30 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:bg-slate-900"
-            aria-label="Toggle theme"
-          >
-            <span id="theme-icon-sun" aria-hidden="true" class="hidden">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm0 17a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm10-7a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5 12a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zm12.657 6.243a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM8.464 7.05a1 1 0 010 1.414l-.707.707A1 1 0 116.343 7.757l.707-.707a1 1 0 011.414 0zm9.193 0l.707.707a1 1 0 11-1.414 1.414l-.707-.707a1 1 0 111.414-1.414zM8.464 16.95l.707.707a1 1 0 11-1.414 1.414l-.707-.707a1 1 0 111.414-1.414zM12 7a5 5 0 100 10 5 5 0 000-10z"/>
-              </svg>
-            </span>
-            <span id="theme-icon-moon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-violet-300" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.742 13.045A8.088 8.088 0 0110.955 3.258 9 9 0 1020.742 13.045z"/>
-              </svg>
-            </span>
-            <span id="theme-toggle-label" class="font-medium">Dark</span>
-          </button>
-        </div>
-      </nav>
-    </header>
-
-    <main class="relative z-10 mx-auto max-w-6xl px-4">
-      {% if messages %}
-        <div class="mt-6">
-          {% for message in messages %}
-            <div
-              class="mb-3 rounded-xl border px-4 py-3 text-sm
-              {% if message.tags == 'success' %}border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300{% else %}border-rose-500/30 bg-rose-500/10 text-rose-700 dark:text-rose-300{% endif %}"
-              role="status"
-            >
-              {{ message }}
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      {% block content %}{% endblock %}
-    </main>
-
-    {% block extra_scripts %}{% endblock %}
-
-    <footer class="mt-16 border-t border-slate-200/70 py-10 dark:border-slate-800/70">
-      <div class="mx-auto max-w-6xl px-4">
-        <p class="text-center text-sm text-slate-500 dark:text-slate-400">
-          (c) {% now "Y" %} Divyanshu Prince. Built with Django + Tailwind.
-        </p>
+      <div class="flex items-center gap-5 overflow-x-auto whitespace-nowrap md:gap-8">
+        <a class="text-sm text-slate-700 hover:text-violet-700 dark:text-slate-300 dark:hover:text-violet-300"
+          href="#about">About</a>
+        <a class="text-sm text-slate-700 hover:text-violet-700 dark:text-slate-300 dark:hover:text-violet-300"
+          href="#projects">Projects</a>
+        <a class="text-sm text-slate-700 hover:text-violet-700 dark:text-slate-300 dark:hover:text-violet-300"
+          href="#experience">Experience</a>
+        <a class="text-sm text-slate-700 hover:text-violet-700 dark:text-slate-300 dark:hover:text-violet-300"
+          href="#contact">Contact Me</a>
       </div>
-    </footer>
 
-    <script src="{% static 'core/js/app.js' %}" defer></script>
-    <script>
-      // Make theme default dark without a flash.
-      (function () {
-        try {
-          var saved = localStorage.getItem("theme");
-          if (saved === "light") document.documentElement.classList.remove("dark");
-          if (saved === "dark" || saved === null) document.documentElement.classList.add("dark");
-        } catch (e) {}
-      })();
-    </script>
-  </body>
+      <div class="flex items-center gap-3">
+        <button id="theme-toggle" type="button"
+          class="inline-flex items-center gap-2 rounded-xl border border-purple-200/70 bg-white/70 px-3 py-2 text-sm text-slate-700 hover:bg-purple-50 dark:border-purple-400/30 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:bg-slate-900"
+          aria-label="Toggle theme">
+          <span id="theme-icon-sun" aria-hidden="true" class="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-amber-400" viewBox="0 0 24 24"
+              fill="currentColor">
+              <path
+                d="M12 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm0 17a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm10-7a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5 12a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zm12.657 6.243a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM8.464 7.05a1 1 0 010 1.414l-.707.707A1 1 0 116.343 7.757l.707-.707a1 1 0 011.414 0zm9.193 0l.707.707a1 1 0 11-1.414 1.414l-.707-.707a1 1 0 111.414-1.414zM8.464 16.95l.707.707a1 1 0 11-1.414 1.414l-.707-.707a1 1 0 111.414-1.414zM12 7a5 5 0 100 10 5 5 0 000-10z" />
+            </svg>
+          </span>
+          <span id="theme-icon-moon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-violet-300" viewBox="0 0 24 24"
+              fill="currentColor">
+              <path d="M20.742 13.045A8.088 8.088 0 0110.955 3.258 9 9 0 1020.742 13.045z" />
+            </svg>
+          </span>
+          <span id="theme-toggle-label" class="font-medium">Dark</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="relative z-10 mx-auto max-w-6xl px-4">
+    {% if messages %}
+    <div class="mt-6">
+      {% for message in messages %}
+      <div
+        class="mb-3 rounded-xl border px-4 py-3 text-sm
+              {% if message.tags == 'success' %}border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300{% else %}border-rose-500/30 bg-rose-500/10 text-rose-700 dark:text-rose-300{% endif %}"
+        role="status">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  {% block extra_scripts %}{% endblock %}
+
+  <footer class="mt-16 border-t border-slate-200/70 py-10 dark:border-slate-800/70">
+    <div class="mx-auto max-w-6xl px-4">
+      <p class="text-center text-sm text-slate-500 dark:text-slate-400">
+        (c) {% now "Y" %} Divyanshu Prince.
+      </p>
+    </div>
+  </footer>
+
+  <script src="{% static 'core/js/app.js' %}" defer></script>
+  <script>
+    // Make theme default dark without a flash.
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved === "light") document.documentElement.classList.remove("dark");
+        if (saved === "dark" || saved === null) document.documentElement.classList.add("dark");
+      } catch (e) { }
+    })();
+  </script>
+</body>
+
 </html>
-

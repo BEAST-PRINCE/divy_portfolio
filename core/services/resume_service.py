@@ -30,7 +30,7 @@ _RESUME_CONTENT: Dict[str, Any] = {
             "Cursor",
             "GitHub Copilot",
             "Claude/ChatGPT",
-            "PostgreSQL (Indexing, Partitioning)",
+            "PostgreSQL",
             "MySQL",
             "RESTful API Design",
         ],

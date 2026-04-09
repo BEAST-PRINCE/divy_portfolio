@@ -1,4 +1,5 @@
-/* global THREE */
+import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 
 (function () {
   function createFaceTexture(label, fillColor, glowColor) {
@@ -9,28 +10,60 @@
     const ctx = canvas.getContext("2d");
     if (!ctx) return null;
 
-    // Base gradient for each face.
-    const grad = ctx.createLinearGradient(0, 0, size, size);
-    grad.addColorStop(0, fillColor);
-    grad.addColorStop(1, "#0f172a");
-    ctx.fillStyle = grad;
+    // Solid bright background
+    ctx.fillStyle = fillColor;
     ctx.fillRect(0, 0, size, size);
 
-    // Subtle inner glow.
-    const glow = ctx.createRadialGradient(size * 0.3, size * 0.25, 20, size * 0.35, size * 0.3, size * 260);
+    // Bright inner center glow
+    const glow = ctx.createRadialGradient(size * 0.5, size * 0.5, 0, size * 0.5, size * 0.5, size * 0.6);
     glow.addColorStop(0, glowColor);
     glow.addColorStop(1, "rgba(255,255,255,0)");
     ctx.fillStyle = glow;
     ctx.fillRect(0, 0, size, size);
 
-    // Crisp readable label.
-    ctx.shadowColor = "rgba(255,255,255,0.6)";
-    ctx.shadowBlur = 12;
-    ctx.fillStyle = "#ffffff";
+    // Ultra legible text with dark stroke and shadow
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.font = "bold 54px Inter, Segoe UI, Arial, sans-serif";
-    ctx.fillText(label, size / 2, size / 2 + 8);
+    ctx.font = "bold 76px Inter, Segoe UI, Arial, sans-serif";
+
+    const maxWidth = size - 40;
+    let lines = [];
+    if (label.includes('/')) {
+        const parts = label.split('/');
+        lines = [parts[0], '/' + parts[1]];
+    } else {
+        const words = label.split(' ');
+        let currentLine = words[0] || "";
+        for (let i = 1; i < words.length; i++) {
+            const width = ctx.measureText(currentLine + " " + words[i]).width;
+            if (width < maxWidth) {
+                currentLine += " " + words[i];
+            } else {
+                lines.push(currentLine);
+                currentLine = words[i];
+            }
+        }
+        if (currentLine) lines.push(currentLine);
+    }
+
+    // Deep black shadow and stroke
+    ctx.shadowColor = "rgba(0,0,0,0.8)";
+    ctx.shadowBlur = 10;
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "#000000";
+    
+    const lineHeight = 80;
+    const startY = (size / 2) - ((lines.length - 1) * lineHeight) / 2 + 8;
+
+    lines.forEach((line, i) => {
+        ctx.strokeText(line, size / 2, startY + i * lineHeight);
+    });
+
+    // Bright yellow/orangish text fill
+    ctx.fillStyle = "#ffbb00";
+    lines.forEach((line, i) => {
+        ctx.fillText(line, size / 2, startY + i * lineHeight);
+    });
 
     const tex = new THREE.CanvasTexture(canvas);
     tex.anisotropy = 4;
@@ -40,7 +73,7 @@
 
   function initSkillsCube() {
     const container = document.getElementById("skills-cube-container");
-    if (!container || !window.THREE) return;
+    if (!container) return;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
@@ -53,20 +86,25 @@
     container.appendChild(renderer.domElement);
 
     const labels = [
-      ["Frontend", "#4338ca", "rgba(167,139,250,0.40)"],
-      ["Backend", "#1d4ed8", "rgba(96,165,250,0.40)"],
-      ["Databases", "#0f766e", "rgba(45,212,191,0.35)"],
-      ["DevOps", "#7c3aed", "rgba(196,181,253,0.38)"],
-      ["AI/ML", "#a21caf", "rgba(232,121,249,0.36)"],
-      ["Tools", "#0284c7", "rgba(125,211,252,0.34)"],
+      ["Agentic AI", "#4f46e5", "rgba(255,255,255,0.4)"],
+      ["Backend", "#2563eb", "rgba(255,255,255,0.4)"],
+      ["Databases", "#0d9488", "rgba(255,255,255,0.4)"],
+      ["Big Data", "#7c3aed", "rgba(255,255,255,0.4)"],
+      ["Data Engineering", "#c026d3", "rgba(255,255,255,0.4)"],
+      ["Springboot/Django", "#0284c7", "rgba(255,255,255,0.4)"],
     ];
 
     const materials = labels.map(([label, faceColor, glowColor]) => {
       const map = createFaceTexture(label, faceColor, glowColor);
-      return new THREE.MeshStandardMaterial({ map: map || undefined, roughness: 0.2, metalness: 0.5 });
+      return new THREE.MeshPhongMaterial({
+        map: map || undefined,
+        specular: 0x444444,
+        shininess: 70,
+        emissive: new THREE.Color(faceColor).multiplyScalar(0.25)
+      });
     });
 
-    const cube = new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2, 16, 16, 16), materials);
+    const cube = new THREE.Mesh(new RoundedBoxGeometry(2, 2, 2, 6, 0.25), materials);
     scene.add(cube);
 
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444455, 1.2);

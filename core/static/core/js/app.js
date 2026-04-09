@@ -10,7 +10,7 @@
 
     try {
       localStorage.setItem("theme", theme);
-    } catch (e) {}
+    } catch (e) { }
 
     const label = $("#theme-toggle-label");
     const sun = $("#theme-icon-sun");
@@ -90,7 +90,7 @@
     const el = $("#typed-roles");
     if (!el) return;
 
-    const words = ["Agentic AI", "Microservices", "GCP Data Pipelines"];
+    const words = ["Agentic AI", "Microservices", "Data Pipelines"];
     let idx = 0;
     let sub = 0;
     let direction = 1; // 1 typing, -1 deleting
@@ -155,14 +155,14 @@
       const techChips =
         tech.length > 0
           ? tech
-              .slice(0, 3)
-              .map(
-                (t) =>
-                  `<span class="rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-medium text-indigo-700 dark:text-indigo-200">${escapeHtml(
-                    t
-                  )}</span>`
-              )
-              .join("")
+            .slice(0, 3)
+            .map(
+              (t) =>
+                `<span class="rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-medium text-indigo-700 dark:text-indigo-200">${escapeHtml(
+                  t
+                )}</span>`
+            )
+            .join("")
           : `<span class="rounded-full bg-slate-500/10 px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-300">Tech</span>`;
 
       grid.insertAdjacentHTML(
