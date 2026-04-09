@@ -113,7 +113,7 @@
           return 100; // brief pause before next cycle starts
         }
       }
-      return direction === 1 ? 130 : 95; // slower typing/deleting cadence
+      return direction === 1 ? 85 : 60; // slightly faster typing/deleting cadence
     };
 
     const loop = () => {

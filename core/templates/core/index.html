@@ -85,7 +85,7 @@
                   <p class="text-xs text-slate-500 dark:text-slate-400">Animated Intro</p>
                   <p class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">
                     <span id="typed-roles">Agentic AI</span>
-                    <span class="animate-pulse text-gradient">.</span>
+                    <span class="animate-pulse text-gradient">_</span>
                   </p>
                   <p class="mt-1 text-xs text-slate-600 dark:text-slate-300">
                     Smooth animations, responsive layout, and fast UI.
@@ -144,6 +144,44 @@
                 {{ item }}
               </span>
             {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="interactive-skills" class="mt-16 scroll-mt-24 md:mt-24" aria-label="Interactive skills section">
+    <div class="card-3d glass-panel rounded-2xl border border-slate-200 p-7 shadow-sm dark:border-slate-800" data-animate="fade-up">
+      <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+        <div>
+          <h2 class="text-2xl font-semibold tracking-tight">Interactive Skills</h2>
+          <p class="mt-2 text-sm text-slate-700 dark:text-slate-300">
+            Rotate the cube to explore major skill categories.
+          </p>
+        </div>
+        <p class="text-xs text-slate-500 dark:text-slate-400">
+          Drag with mouse or touch
+        </p>
+      </div>
+
+      <div class="mt-6 grid gap-6 lg:grid-cols-12 lg:items-center">
+        <div class="lg:col-span-7">
+          <div
+            id="skills-cube-container"
+            class="relative h-[320px] w-full overflow-hidden rounded-2xl border border-violet-300/40 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-fuchsia-500/10 dark:border-violet-400/30"
+          >
+            <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.35),transparent_45%)]"></div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="grid gap-3 sm:grid-cols-2">
+            <span class="rounded-lg bg-violet-500/10 px-3 py-2 text-sm text-violet-700 dark:text-violet-300">Frontend</span>
+            <span class="rounded-lg bg-blue-500/10 px-3 py-2 text-sm text-blue-700 dark:text-blue-300">Backend</span>
+            <span class="rounded-lg bg-indigo-500/10 px-3 py-2 text-sm text-indigo-700 dark:text-indigo-300">Databases</span>
+            <span class="rounded-lg bg-purple-500/10 px-3 py-2 text-sm text-purple-700 dark:text-purple-300">DevOps</span>
+            <span class="rounded-lg bg-fuchsia-500/10 px-3 py-2 text-sm text-fuchsia-700 dark:text-fuchsia-300">AI/ML</span>
+            <span class="rounded-lg bg-cyan-500/10 px-3 py-2 text-sm text-cyan-700 dark:text-cyan-300">Tools</span>
           </div>
         </div>
       </div>
@@ -304,4 +342,9 @@
       </div>
     </div>
   </section>
+{% endblock %}
+
+{% block extra_scripts %}
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js" defer></script>
+  <script src="{% static 'core/js/skills-cube.js' %}" defer></script>
 {% endblock %}
