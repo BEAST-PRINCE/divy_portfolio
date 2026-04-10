@@ -8,90 +8,7 @@
   <meta name="theme-color" content="#020617" />
   <title>{% block title %}Portfolio{% endblock %}</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    // Enable Tailwind `dark:` classes via `html.dark`.
-    tailwind.config = { darkMode: "class" };
-  </script>
-
-  <style>
-    /* Small set of production-friendly defaults without extra libraries. */
-    .text-gradient {
-      background: linear-gradient(90deg, #60a5fa, #a78bfa, #c084fc);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .bg-mesh {
-      background:
-        radial-gradient(circle at 12% 18%, rgba(147, 51, 234, 0.22), transparent 28%),
-        radial-gradient(circle at 86% 12%, rgba(59, 130, 246, 0.2), transparent 26%),
-        radial-gradient(circle at 84% 72%, rgba(192, 132, 252, 0.18), transparent 34%),
-        radial-gradient(circle at 18% 82%, rgba(99, 102, 241, 0.16), transparent 30%),
-        linear-gradient(165deg, #f8faff 0%, #f4f1ff 42%, #edf2ff 100%);
-    }
-
-    .dark .bg-mesh {
-      background:
-        radial-gradient(circle at 12% 18%, rgba(168, 85, 247, 0.28), transparent 28%),
-        radial-gradient(circle at 84% 14%, rgba(59, 130, 246, 0.2), transparent 26%),
-        radial-gradient(circle at 84% 72%, rgba(192, 132, 252, 0.2), transparent 34%),
-        radial-gradient(circle at 18% 82%, rgba(99, 102, 241, 0.2), transparent 30%),
-        linear-gradient(165deg, #020617 0%, #0b1023 45%, #130c2e 100%);
-    }
-
-    .card-3d {
-      transform-style: preserve-3d;
-      box-shadow:
-        0 10px 30px rgba(15, 23, 42, 0.16),
-        0 2px 8px rgba(99, 102, 241, 0.15);
-      transition: transform 300ms ease, box-shadow 300ms ease;
-    }
-
-    .card-3d:hover {
-      transform: translateY(-4px) rotateX(2deg) rotateY(-2deg);
-      box-shadow:
-        0 18px 38px rgba(15, 23, 42, 0.2),
-        0 8px 18px rgba(99, 102, 241, 0.2);
-    }
-
-    .glass-panel {
-      background: linear-gradient(145deg,
-          rgba(255, 255, 255, 0.88),
-          rgba(248, 250, 252, 0.78));
-      backdrop-filter: blur(10px);
-    }
-
-    .dark .glass-panel {
-      background: linear-gradient(145deg,
-          rgba(15, 23, 42, 0.78),
-          rgba(2, 6, 23, 0.7));
-    }
-
-    .ambient-blob {
-      position: fixed;
-      filter: blur(38px);
-      opacity: 0.24;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .dark .ambient-blob {
-      opacity: 0.3;
-    }
-
-    [data-animate="fade-up"] {
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 700ms ease, transform 700ms ease;
-    }
-
-    [data-animate="fade-up"].is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
+  <link href="{% static 'core/css/main.css' %}" rel="stylesheet">
 </head>
 
 <body class="bg-mesh font-bold text-slate-900 antialiased dark:text-slate-100">
@@ -178,7 +95,7 @@
     </div>
   </footer>
 
-  <script src="{% static 'core/js/app.js' %}" defer></script>
+  <script type="module" src="{% static 'core/js/main.js' %}" defer></script>
   <script>
     // Make theme default dark without a flash.
     (function () {
