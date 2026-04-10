@@ -1,9 +1,9 @@
 import json
 import os
 import time
-import urllib.error
-import urllib.request
 from typing import Any, Dict, List, Optional
+
+import httpx
 
 
 _CACHE: Dict[str, Any] = {"ts": 0.0, "data": None}
@@ -19,16 +19,28 @@ _PINNED_REPOS = [
 
 
 def _fetch_github_json(url: str) -> Any:
-    req = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": "django-portfolio",
-            "Accept": "application/vnd.github+json",
-        },
-    )
-    with urllib.request.urlopen(req, timeout=15) as resp:
-        body = resp.read().decode("utf-8")
-        return json.loads(body)
+    """
+    Fetch JSON from GitHub with high-level HTTP client features.
+    Includes a basic retry policy for transient network issues.
+    """
+
+    headers = {
+        "User-Agent": "django-portfolio",
+        "Accept": "application/vnd.github+json",
+    }
+
+    # Using a client as a context manager for connection pooling (if called multiple times).
+    with httpx.Client(headers=headers, timeout=15.0, follow_redirects=True) as client:
+        for attempt in range(3):
+            try:
+                response = client.get(url)
+                response.raise_for_status()
+                return response.json()
+            except (httpx.ConnectError, httpx.TimeoutException) as e:
+                if attempt == 2:
+                    raise e
+                time.sleep(1)  # Brief backoff
+    return None
 
 
 def get_featured_projects(username: str, count: int = 6) -> List[Dict[str, Any]]:
@@ -52,7 +64,7 @@ def get_featured_projects(username: str, count: int = 6) -> List[Dict[str, Any]]
 
     try:
         repos = _fetch_github_json(url)
-    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, json.JSONDecodeError):
+    except (httpx.HTTPError, json.JSONDecodeError, ValueError):
         return []
 
     if not isinstance(repos, list):

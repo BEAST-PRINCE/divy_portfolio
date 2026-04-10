@@ -4,3 +4,4 @@ djangorestframework==3.17.1
 python-dotenv==1.2.2
 sqlparse==0.5.5
 tzdata==2026.1
+httpx==0.28.1
