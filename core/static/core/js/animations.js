@@ -73,3 +73,38 @@ export function typeRotator() {
   };
   loop();
 }
+
+export function initScrollSpy() {
+  const sections = $$('section[id]');
+  const navLinks = $$('.nav-link');
+
+  if (!sections.length || !navLinks.length) return;
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '-30% 0px -60% 0px',
+    threshold: 0
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        const activeClasses = ['bg-violet-100', 'dark:bg-violet-500/20', 'text-violet-900', 'dark:text-violet-100', 'font-bold', 'shadow-sm'];
+        const inactiveClasses = ['text-slate-700', 'dark:text-slate-300'];
+
+        navLinks.forEach(link => {
+          if (link.getAttribute('href') === `#${id}`) {
+             link.classList.add(...activeClasses);
+             link.classList.remove(...inactiveClasses);
+          } else {
+             link.classList.remove(...activeClasses);
+             link.classList.add(...inactiveClasses);
+          }
+        });
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(sec => observer.observe(sec));
+}
