@@ -1,12 +1,12 @@
-# 🚀 Divyanshu's Antigravity-Powered Portfolio 
+# 🚀 Divyanshu's(My) Portfolio 
 
-Welcome to the codebase of my personal portfolio. If you're a recruiter reading this, *hire me now* before the AI does! This isn't just another boring static site; it's a dynamic, fully-featured web app that proves I know a thing or two about backend systems, frontend flair, and letting the machines do the heavy lifting.
+Welcome to the codebase of my personal portfolio. If you're a recruiter reading this, **hire me now** before the AI does! This isn't just another boring static site; it's a dynamic, fully-featured web app that proves I know a thing or two about backend systems, frontend flair, and letting the machines do the heavy lifting.
 
 🔴 **Live Demo**: [Check it out right here!](https://divy-portfolio-1x47.onrender.com/)
 
 🦖 **For Fun (The "Before AI" Era)**: Want to see what my portfolio looked like before I turbocharged it with Agentic AI? [Behold the legacy version here](https://divyanshu-project-portfolio.vercel.app/). Quite the glow-up, right?
 
-## 🤔 Wait, who wrote this?
+## 🤔 Wait, who built this?
 
 This project was built with a potent combination of human ingenuity (mine) and artificial intelligence (Google DeepMind's **Antigravity**). Yes, I pair-programmed with a state-of-the-art AI agent. We argued over CSS, optimized Django settings together, and gracefully managed Render deploy scripts without breaking a sweat. It's the future of software engineering, and I'm surfing the wave. 🏄‍♂️
 
