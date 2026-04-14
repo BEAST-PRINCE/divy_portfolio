@@ -34,6 +34,11 @@ else:
     # In local dev (DEBUG=True) allow all hosts for convenience.
     ALLOWED_HOSTS = ["*"] if DEBUG else []
 
+# Automatically add Render's external hostname if it exists
+RENDER_EXTERNAL_HOSTNAME = os.getenv('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
 if DEBUG:
     # Ensure local/dev and Django test client hosts always work.
     for _host in ("127.0.0.1", "localhost", "testserver"):
