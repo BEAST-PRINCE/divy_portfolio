@@ -1,4 +1,4 @@
-# 🚀 Divyanshu's Antigravity-Powered Portfolio 
+# 🚀 Divyanshu's(My) Portfolio 
 
 Welcome to the codebase of my personal portfolio. If you're a recruiter reading this, *hire me now* before the AI does! This isn't just another boring static site; it's a dynamic, fully-featured web app that proves I know a thing or two about backend systems, frontend flair, and letting the machines do the heavy lifting.
 
