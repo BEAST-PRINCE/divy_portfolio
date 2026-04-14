@@ -29,6 +29,10 @@ def _fetch_github_json(url: str) -> Any:
         "Accept": "application/vnd.github+json",
     }
 
+    token = os.getenv("GITHUB_TOKEN")
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+
     # Using a client as a context manager for connection pooling (if called multiple times).
     with httpx.Client(headers=headers, timeout=15.0, follow_redirects=True) as client:
         for attempt in range(3):
